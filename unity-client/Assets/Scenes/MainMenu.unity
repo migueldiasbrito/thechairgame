@@ -984,7 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4075c99131e67a4c87ff09f3b879e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLobbySceneIndex: 1
+  _gameSceneIndex: 1
 --- !u!4 &1542405838
 Transform:
   m_ObjectHideFlags: 0
@@ -1085,7 +1085,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1542405837}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: GoToLobby
+        m_MethodName: GoToGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
