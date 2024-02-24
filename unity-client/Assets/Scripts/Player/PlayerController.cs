@@ -50,6 +50,18 @@ public class PlayerController : MonoBehaviour
         _onReadyCallback = onReadyCallback;
     }
 
+    public void Eliminate()
+    {
+        if (_chairOccupied != null)
+        {
+            _chairOccupied.LeaveChair(this);
+            _chairOccupied = null;
+        }
+
+        // Animate me instead...
+        Destroy(gameObject);
+    }
+
     private void FixedUpdate()
     {
         HandleSitting();
@@ -97,6 +109,8 @@ public class PlayerController : MonoBehaviour
             position.z = chair.x.transform.position.z;
             transform.position = position;
 
+            _gameManager.OnPlayerSit(this);
+
             break;
         }
     }
@@ -142,5 +156,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _sqrMaxDistance = Mathf.Pow(_maxDistanceToSitOnChair, 2);
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }
