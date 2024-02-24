@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<ChairController> Chairs { get; private set; } = new();
+    [field: SerializeField] public List<ChairController> Chairs { get; private set; } = new();
     [SerializeField] private float _intervalBetweenTurns = 2f;
 
     [SerializeField] private Vector2 _playerMinPosition = new Vector2(-1, -1);
