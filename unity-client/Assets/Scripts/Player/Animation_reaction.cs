@@ -24,4 +24,8 @@ public class Animation_reaction : MonoBehaviour
     {
         animator.SetBool("doSit", true);
     }
+    public void GetUP()
+    {
+        animator.SetBool("doSit", false);
+    }
 }

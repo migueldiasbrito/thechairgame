@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider _collider;
     [SerializeField] private float _speed = 100;
     [SerializeField] private float _maxDistanceToSitOnChair = 1;
+    [SerializeField] private Animation_reaction _sonReact ;
+
 
     private Vector2 _movement = Vector2.zero;
     private bool _sit = false;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (!callbackContext.performed) return;
 
         _sit = true;
+        _sonReact.Sit();
     }
 
     public void Init(GameManager gameManager, Action<PlayerController> onReadyCallback)
@@ -107,6 +110,8 @@ public class PlayerController : MonoBehaviour
             _chairOccupied.LeaveChair(this);
             _chairOccupied = null;
         }
+
+        _sonReact.GetUP();
     }
 
     private void HandleMovement()
