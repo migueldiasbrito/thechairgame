@@ -22,7 +22,14 @@ public class Animation_reaction : MonoBehaviour
 
     public void Sit()
     {
+       
         animator.SetBool("doSit", true);
+        if (GetComponentInParent<PlayerController>()._chairOccupied != null)
+        {
+            print("found one");
+            //this.transform.position = GetComponentInParent<PlayerController>()._chairOccupied.transform.position;
+        }
+    
     }
     public void GetUP()
     {

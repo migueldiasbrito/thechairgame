@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private float _sqrMaxDistance;
 
     private bool _isSitted = false;
-    private ChairController _chairOccupied = null;
+    public ChairController _chairOccupied { get; private set; } = null;
 
     private GameManager _gameManager;
 
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if (!callbackContext.performed) return;
 
         _sit = true;
-        _sonReact.Sit();
+       
     }
 
     public void Init(GameManager gameManager, Action<PlayerController> onReadyCallback)
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             if (!chair.x.TrySit(this)) break;
 
             _chairOccupied = chair.x;
-
+            _sonReact.Sit();
             Vector3 position = transform.position;
             position.x = chair.x.transform.position.x;
             position.z = chair.x.transform.position.z;
