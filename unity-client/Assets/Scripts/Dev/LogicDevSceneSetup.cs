@@ -21,7 +21,7 @@ public class LogicDevSceneSetup : MonoBehaviour
 
         numPlayers++;
 
-        if (numPlayers == 2) GameManager.StartSetup();
+        if (numPlayers == 3) GameManager.StartSetup();
     }
 
     private void OnPlayerReady(PlayerController _)

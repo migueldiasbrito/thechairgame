@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,12 +14,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxDistanceToSitOnChair = 1;
     [SerializeField] private Animation_reaction _sonReact;
     [field: SerializeField] public ChairController InitialChair { get; private set; }
+    [SerializeField] private Vector2 _fogoNoCuForce = new Vector2(5f, 5f);
+    [SerializeField] private float _maxStopTime = 1f;
+    [SerializeField] private float _stopedTimeAfterBurst = 1f;
 
 
     private Vector2 _movement = Vector2.zero;
     private bool _action = false;
     private bool _dash = false;
     private float _sqrMaxDistance;
+    private bool _canMove = true;
 
     public bool IsSitted { get; private set; } = false;
     public bool IsDashing { get; private set; } = false;
@@ -28,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private GameManager _gameManager;
 
     private Action<PlayerController> _onReadyCallback;
+
+    private Coroutine _isStoppedCoroutine = null;
 
     public void OnPlayerReady(InputAction.CallbackContext callbackContext)
     {
@@ -80,13 +87,23 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!_canMove)
+        {
+            _action = false;
+            return;
+        }
+
         HandleChair();
 
         HandleSitting();
 
         HandleMovement();
 
+
         Dash();
+
+        HandleMaxStopTime();
+
     }
 
     private void HandleChair()
@@ -206,6 +223,27 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+    private void HandleMaxStopTime()
+    {
+        if (_isStoppedCoroutine == null)
+        {
+            if (_gameManager.State == GameState.TurnStarted && _movement.magnitude <= 0.1f)
+            {
+                _isStoppedCoroutine = StartCoroutine(MexeTe());
+            }
+        }
+        else
+        {
+            if (_gameManager.State != GameState.TurnStarted || _movement.magnitude >= 0.1f)
+            {
+                StopCoroutine(_isStoppedCoroutine);
+                _isStoppedCoroutine = null;
+            }
+        }
+    }
+
+
     private void Awake()
     {
         _sqrMaxDistance = Mathf.Pow(_maxDistanceToSitOnChair, 2);
@@ -214,6 +252,30 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitialChair = GetComponentInChildren<ChairController>();
+    }
+
+    private IEnumerator MexeTe()
+    {
+        yield return new WaitForSeconds(_maxStopTime);
+
+        Vector3 velocity = _rigidbody.velocity;
+        velocity.y = _fogoNoCuForce.y;
+
+        float randomX = UnityEngine.Random.Range(-1f, 1f);
+        float randomZ = UnityEngine.Random.Range(-1f, 1f);
+        velocity.x = _fogoNoCuForce.x * randomX;
+        velocity.z = _fogoNoCuForce.x * randomZ;
+
+        _rigidbody.velocity = velocity;
+
+        StartCoroutine(NaoTeMexesAgora());
+    }
+
+    private IEnumerator NaoTeMexesAgora()
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(_stopedTimeAfterBurst);
+        _canMove = true;
     }
 
     private void OnDestroy()

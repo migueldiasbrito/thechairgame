@@ -447,8 +447,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Untitled Chair Game\nby Bates Mal Men\n\nProgrammers\nMiguel Brito\nMois\xE9s
-    Moreira\n\nArtists\nPedro <apelido>\nMonica Vieira\n\nSound Design\nEdgar <apelido>\n\nAinda
-    nao sei o que vai fayer\nCatarina <apelido>\n\nMAD JAM FEST 2024"
+    Moreira\n\nArtists\nPedro Costa\nMonica Vieira\n\nSound Design\nEdgar Amorim\n\nToothless
+    Topo Gigio\nCatarina\n\nTraitor\nMarco Vale\n\nMAD JAM FEST 2024"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
