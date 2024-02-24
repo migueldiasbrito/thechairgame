@@ -69,9 +69,6 @@ public class PlayerController : MonoBehaviour
     {
         _gameManager = gameManager;
         _onReadyCallback = onReadyCallback;
-
-        if (TryGetComponent(out ChairController chair))
-            _gameManager.AddChair(chair);
     }
 
     public void Eliminate()
@@ -252,6 +249,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitialChair = GetComponentInChildren<ChairController>();
+
+        if (InitialChair != null)
+            _gameManager.AddChair(InitialChair);
     }
 
     private IEnumerator MexeTe()
@@ -288,13 +288,16 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out PlayerController _))
         {
             if (IsDashing)
+
             {
               
-                collision.gameObject.GetComponent<Rigidbody>().AddForce(collision.gameObject.transform.forward * _dashForce * 10);
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * _dashForce * 10);
                 _sonReact.FinishDashAnimation();
                 IsDashing = false;
             }
                 
+               
+
         }
     }
 
