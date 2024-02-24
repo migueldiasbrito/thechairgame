@@ -10,7 +10,7 @@ public class Animation_reaction : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponentInParent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -22,6 +22,17 @@ public class Animation_reaction : MonoBehaviour
 
     public void Sit()
     {
+       
         animator.SetBool("doSit", true);
+        if (GetComponentInParent<PlayerController>()._chairOccupied != null)
+        {
+            print("found one");
+            //this.transform.position = GetComponentInParent<PlayerController>()._chairOccupied.transform.position;
+        }
+    
+    }
+    public void GetUP()
+    {
+        animator.SetBool("doSit", false);
     }
 }
