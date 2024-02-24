@@ -8,9 +8,10 @@ public class PlayerLobbyController : MonoBehaviour
 {
     [SerializeField] private PlayerInputManager _playerInputManager;
 
-    [SerializeField] private TMP_Text _startInstruction;
-    [SerializeField] private TMP_Text _noPlayersReadyLabel;
-    [SerializeField] private TMP_Text _hasPlayersReadyLabel;
+    [SerializeField] private GameObject _lobbyPanel;
+    [SerializeField] private GameObject _startInstruction;
+    [SerializeField] private GameObject _noPlayersReadyLabel;
+    [SerializeField] private GameObject _hasPlayersReadyLabel;
     [SerializeField] private TMP_Text _playersReadyLabel;
 
     private Dictionary<PlayerController, bool> _playersReady = new();
@@ -24,8 +25,8 @@ public class PlayerLobbyController : MonoBehaviour
 
             if (_playersReady.Count == 2)
             {
-                _startInstruction.gameObject.SetActive(true);
-                _noPlayersReadyLabel.gameObject.SetActive(true);
+                _startInstruction.SetActive(true);
+                _noPlayersReadyLabel.SetActive(true);
             }
         }
     }
@@ -36,10 +37,24 @@ public class PlayerLobbyController : MonoBehaviour
 
         if (_playersReady[playerController]) return;
 
-        _playersReady[playerController] = true;
-        _noPlayersReadyLabel.gameObject.SetActive(false);
-        _hasPlayersReadyLabel.gameObject.SetActive(true);
-        _playersReadyLabel.text = $"{_playersReady.Where(x => x.Value).ToList().Count} / {_playersReady.Count}";
-        _playersReadyLabel.gameObject.SetActive(true);
+        int numberOfPlayersReady = _playersReady.Where(x => x.Value).ToList().Count;
+
+        if (numberOfPlayersReady == _playersReady.Count)
+        {
+            _lobbyPanel.SetActive(false);
+        }
+        else
+        {
+            _playersReady[playerController] = true;
+            _noPlayersReadyLabel.SetActive(false);
+            _hasPlayersReadyLabel.SetActive(true);
+            _playersReadyLabel.text = $"{numberOfPlayersReady} / {_playersReady.Count}";
+            _playersReadyLabel.gameObject.SetActive(true);
+        }
+    }
+
+    private void Start()
+    {
+        _lobbyPanel.SetActive(true);
     }
 }
