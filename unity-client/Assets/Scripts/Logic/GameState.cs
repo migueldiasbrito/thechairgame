@@ -1,4 +1,4 @@
 public enum GameState
 {
-    Wait, TurnStarted, TurnEnded
+    Lobby, Setup, Wait, TurnStarted, TurnEnded
 }

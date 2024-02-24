@@ -9,6 +9,8 @@ public class LogicDevSceneSetup : MonoBehaviour
     public GameManager GameManager;
     public GameTurnWoMusic turnManager;
 
+    private int numPlayers = 0;
+
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         if (playerInput.TryGetComponent(out PlayerController playerController))
@@ -16,16 +18,21 @@ public class LogicDevSceneSetup : MonoBehaviour
             GameManager.AddPlayer(playerController);
             playerController.Init(GameManager, OnPlayerReady);
         }
+
+        numPlayers++;
+
+        if (numPlayers == 2) GameManager.StartSetup();
     }
 
     private void OnPlayerReady(PlayerController _)
     {
-        GameManager.StartTurn();
+        //GameManager.StartTurn();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        //GameManager.StartSetup();
         GameManager.SetStartTurnAction(turnManager.StartTurn);
     }
 
