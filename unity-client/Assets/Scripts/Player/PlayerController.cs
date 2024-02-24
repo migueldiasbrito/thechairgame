@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Collider _collider;
     [SerializeField] private float _speed = 100;
+    [SerializeField] private float _rotationSpeed = 100;
     [SerializeField] private float _maxDistanceToSitOnChair = 1;
     [SerializeField] private Animation_reaction _sonReact ;
 
@@ -121,6 +122,17 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = _movement.x * _speed * Time.fixedDeltaTime;
         velocity.z = _movement.y * _speed * Time.fixedDeltaTime;
+
+        Vector3 inputDirection = new Vector3(_movement.x, 0, _movement.y).normalized;
+
+        if (inputDirection.magnitude >= 0.1f)
+        {
+            // Calculate the rotation to look towards the movement direction
+            Quaternion toRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
+
+            // Smoothly interpolate towards the target rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, Time.fixedDeltaTime * _rotationSpeed);
+        }
 
         _rigidbody.velocity = velocity;
     }
