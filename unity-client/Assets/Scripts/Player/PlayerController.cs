@@ -288,14 +288,21 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out PlayerController _))
         {
             if (IsDashing)
+            {
+              
                 collision.gameObject.GetComponent<Rigidbody>().AddForce(collision.gameObject.transform.forward * _dashForce * 10);
+                _sonReact.FinishDashAnimation();
+                IsDashing = false;
+            }
+                
         }
     }
 
     IEnumerator GoDash()
     {
         _sonReact.DoDashAnimation();
-        IsDashing = true;
+        _rigidbody.velocity += transform.forward* _dashForce;
+      IsDashing = true;
         yield return new WaitForSeconds(1);
         _sonReact.FinishDashAnimation();
         IsDashing = false;

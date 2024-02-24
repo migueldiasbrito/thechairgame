@@ -145,12 +145,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 54409596923227288}
   _collider: {fileID: 3399072345741357221}
-  _speed: 100
-  _dashForce: 5000
+  _speed: 200
+  _dashForce: 25
   _rotationSpeed: 100
   _maxDistanceToSitOnChair: 2
   _sonReact: {fileID: 7366368105020392876}
   <InitialChair>k__BackingField: {fileID: 0}
+  _fogoNoCuForce: {x: 5, y: 5}
+  _maxStopTime: 1
+  _stopedTimeAfterBurst: 1
 --- !u!54 &54409596923227288
 Rigidbody:
   m_ObjectHideFlags: 0
