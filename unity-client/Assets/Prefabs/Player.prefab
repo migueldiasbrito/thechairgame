@@ -77,7 +77,19 @@ MonoBehaviour:
     m_ActionId: c665819e-33e0-4e41-8ba6-dfa22010b6c2
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2600197174338221947}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 972c0529-1f27-4905-88eb-819c5d2e198f
     m_ActionName: Player/Sit[/Keyboard/space]
   - m_PersistentCalls:
@@ -114,7 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 54409596923227288}
+  _collider: {fileID: 3399072345741357221}
   _speed: 100
+  _maxDistanceToSitOnChair: 2
 --- !u!54 &54409596923227288
 Rigidbody:
   m_ObjectHideFlags: 0

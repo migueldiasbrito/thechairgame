@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerLobbyController : MonoBehaviour
 {
     [SerializeField] private PlayerInputManager _playerInputManager;
+    [SerializeField] private GameManager _gameManager;
 
     [SerializeField] private GameObject _lobbyPanel;
     [SerializeField] private GameObject _startInstruction;
@@ -21,7 +22,7 @@ public class PlayerLobbyController : MonoBehaviour
         if (playerInput.TryGetComponent(out PlayerController playerController))
         {
             _playersReady.Add(playerController, false);
-            playerController.SetOnReadyCallback(OnPlayerReady);
+            playerController.Init(_gameManager, OnPlayerReady);
 
             if (_playersReady.Count == 2)
             {
@@ -42,6 +43,7 @@ public class PlayerLobbyController : MonoBehaviour
         if (numberOfPlayersReady == _playersReady.Count)
         {
             _lobbyPanel.SetActive(false);
+            _playerInputManager.DisableJoining();
         }
         else
         {
