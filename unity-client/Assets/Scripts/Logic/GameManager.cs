@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
                 EliminatePlayer(player);
                 break;
             case GameState.TurnEnded:
+                PlayerSittedOnTurnEnded();
                 break;
             case GameState.Wait:
             default:
@@ -66,6 +68,16 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("WINNAH!");
+        }
+    }
+
+    private void PlayerSittedOnTurnEnded()
+    {
+        var _notSittedPlayers = _players.Where(x => x._chairOccupied == null);
+
+        if (_notSittedPlayers.Count() == 1)
+        {
+            EliminatePlayer(_notSittedPlayers.First());
         }
     }
 
