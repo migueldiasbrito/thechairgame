@@ -22,6 +22,7 @@ public class PlayerLobbyController : MonoBehaviour
         if (playerInput.TryGetComponent(out PlayerController playerController))
         {
             _playersReady.Add(playerController, false);
+            _gameManager.AddPlayer(playerController);
             playerController.Init(_gameManager, OnPlayerReady);
 
             if (_playersReady.Count == 2)
