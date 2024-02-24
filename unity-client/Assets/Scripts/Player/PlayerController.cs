@@ -69,9 +69,6 @@ public class PlayerController : MonoBehaviour
     {
         _gameManager = gameManager;
         _onReadyCallback = onReadyCallback;
-
-        if (TryGetComponent(out ChairController chair))
-            _gameManager.AddChair(chair);
     }
 
     public void Eliminate()
@@ -253,6 +250,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InitialChair = GetComponentInChildren<ChairController>();
+
+        if (InitialChair != null)
+            _gameManager.AddChair(InitialChair);
     }
 
     private IEnumerator MexeTe()

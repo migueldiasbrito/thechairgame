@@ -116,9 +116,9 @@ public class GameManager : MonoBehaviour
 
     public void StartNewTurn()
     {
-        int chairToDestroyIndex = UnityEngine.Random.Range(0, Chairs.Count);
-
         _players.Where(x => x.IsSitted).ToList().ForEach(x => x.GetUp());
+
+        int chairToDestroyIndex = UnityEngine.Random.Range(0, Chairs.Count);
 
         // Animate me instead...
         Destroy(Chairs[chairToDestroyIndex].gameObject);
