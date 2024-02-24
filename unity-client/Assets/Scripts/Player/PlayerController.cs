@@ -214,11 +214,10 @@ public class PlayerController : MonoBehaviour
     public void Dash()
     {
         if (!_dash) return;
-        Vector3 dashDirection = transform.forward;
 
         // Apply the dash force
+        StartCoroutine(GoDash());
 
-        _sonReact.DoDashAnimation();
         _dash = false;
     }
 
@@ -287,13 +286,16 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out PlayerController _))
         {
-
+            if (IsDashing)
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(collision.gameObject.transform.forward * _dashForce * 10);
         }
     }
 
-    //IEnumerator FinishDash()
-    //{
-    //    IsDashing = true;
-    //    yield return new WaitForSeconds(1);
-    //}
+    IEnumerator GoDash()
+    {
+        _sonReact.DoDashAnimation();
+        IsDashing = true;
+        yield return new WaitForSeconds(1);
+        IsDashing = false;
+    }
 }
