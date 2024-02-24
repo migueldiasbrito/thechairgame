@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out PlayerController _))
         {
             if (IsDashing)
-                collision.gameObject.GetComponent<Rigidbody>().AddForce(collision.gameObject.transform.forward * _dashForce * 10);
+                collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * _dashForce * 10);
         }
     }
 

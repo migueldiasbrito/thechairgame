@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayersDevSceneSetup : MonoBehaviour
 {
     public GameManager GameManager;
-    public PlayerController Player;
+    public PlayerController[] Player;
 
     // Start is called before the first frame update
     void Start()
     {
-        Player.Init(GameManager, null);
+        Player[0].Init(GameManager, null);
+        Player[1].Init(GameManager, null);
     }
 
     // Update is called once per frame
