@@ -110,6 +110,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ab2266bf-74bd-45d8-9f95-3eeaa386053a
     m_ActionName: Player/Ready[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2600197174338221947}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnActionButtonClickedDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: be2db203-8487-43a8-bce5-cc6aba7bb490
+    m_ActionName: Player/New action[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -130,6 +146,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 54409596923227288}
   _collider: {fileID: 3399072345741357221}
   _speed: 100
+  _dashForce: 5000
   _rotationSpeed: 100
   _maxDistanceToSitOnChair: 2
   _sonReact: {fileID: 7366368105020392876}
@@ -284,6 +301,10 @@ PrefabInstance:
     - target: {fileID: 5688608327861726977, guid: c77a1f8d2ad93b94fa973d4fcf09ab05, type: 3}
       propertyPath: m_Name
       value: Chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688608327861726977, guid: c77a1f8d2ad93b94fa973d4fcf09ab05, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6066539751818584127, guid: c77a1f8d2ad93b94fa973d4fcf09ab05, type: 3}
       propertyPath: m_LocalPosition.x
