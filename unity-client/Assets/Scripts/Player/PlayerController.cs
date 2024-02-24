@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     private bool _sit = false;
     private float _sqrMaxDistance;
 
-    private bool _isSitted = false;
-    public ChairController _chairOccupied { get; private set; } = null;
+    public bool IsSitted { get; private set; } = false;
+    public ChairController ChairOccupied { get; private set; } = null;
 
     private GameManager _gameManager;
 
@@ -52,10 +52,10 @@ public class PlayerController : MonoBehaviour
 
     public void Eliminate()
     {
-        if (_chairOccupied != null)
+        if (ChairOccupied != null)
         {
-            _chairOccupied.LeaveChair(this);
-            _chairOccupied = null;
+            ChairOccupied.LeaveChair(this);
+            ChairOccupied = null;
         }
 
         // Animate me instead...
@@ -73,15 +73,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!_sit) return;
 
-        _isSitted = !_isSitted;
-
-        if (_isSitted)
+        if (IsSitted)
         {
-            TrySitOnChair();
+            GetUp();
         }
         else
         {
-            GetUp();
+            TrySitOnChair();
         }
 
         _sit = false;
@@ -89,6 +87,8 @@ public class PlayerController : MonoBehaviour
 
     private void TrySitOnChair()
     {
+        IsSitted = true;
+
         _rigidbody.isKinematic = true;
         _collider.enabled = false;
 
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!chair.x.TrySit(this)) break;
 
-            _chairOccupied = chair.x;
+            ChairOccupied = chair.x;
             _sonReact.Sit();
             Vector3 position = transform.position;
             position.x = chair.x.transform.position.x;
@@ -115,25 +115,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GetUp()
+    public void GetUp()
     {
+        IsSitted = false;
+
         _rigidbody.isKinematic = false;
         _collider.enabled = true;
 
-        if (_chairOccupied != null)
+        if (ChairOccupied != null)
         {
-            _chairOccupied.LeaveChair(this);
+            ChairOccupied.LeaveChair(this);
             _sonReact.GetUP();
-            _chairOccupied = null;
-         
+            ChairOccupied = null;
         }
-
-    
     }
 
     private void HandleMovement()
     {
-        if (_isSitted) return;
+        if (IsSitted) return;
 
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = _movement.x * _speed * Time.fixedDeltaTime;

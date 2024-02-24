@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void PlayerSittedOnTurnEnded()
     {
-        var _notSittedPlayers = _players.Where(x => x._chairOccupied == null);
+        var _notSittedPlayers = _players.Where(x => x.ChairOccupied == null);
 
         if (_notSittedPlayers.Count() == 1)
         {
@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
     public void StartNewTurn()
     {
         int chairToDestroyIndex = UnityEngine.Random.Range(0, Chairs.Count);
+
+        _players.Where(x => x.IsSitted).ToList().ForEach(x => x.GetUp());
 
         // Animate me instead...
         Destroy(Chairs[chairToDestroyIndex].gameObject);
