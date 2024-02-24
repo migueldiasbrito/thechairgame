@@ -10,7 +10,7 @@ public class Animation_reaction : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponentInParent<Rigidbody>();
     }
 
     // Update is called once per frame
