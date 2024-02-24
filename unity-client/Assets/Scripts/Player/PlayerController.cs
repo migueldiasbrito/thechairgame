@@ -9,9 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Collider _collider;
     [SerializeField] private float _speed = 100;
+    [SerializeField] private float _dashForce = 100;
     [SerializeField] private float _rotationSpeed = 100;
     [SerializeField] private float _maxDistanceToSitOnChair = 1;
-    [SerializeField] private Animation_reaction _sonReact ;
+    [SerializeField] private Animation_reaction _sonReact;
     [field: SerializeField] public ChairController InitialChair { get; private set; }
     [SerializeField] private Vector2 _fogoNoCuForce = new Vector2(5f, 5f);
     [SerializeField] private float _maxStopTime = 1f;
@@ -20,10 +21,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 _movement = Vector2.zero;
     private bool _action = false;
+    private bool _dash = false;
     private float _sqrMaxDistance;
     private bool _canMove = true;
 
     public bool IsSitted { get; private set; } = false;
+    public bool IsDashing { get; private set; } = false;
+
     public ChairController ChairOccupied { get; private set; } = null;
 
     private GameManager _gameManager;
@@ -49,7 +53,16 @@ public class PlayerController : MonoBehaviour
         if (!callbackContext.performed) return;
 
         _action = true;
-       
+
+
+    }
+    public void OnActionButtonClickedDash(InputAction.CallbackContext callbackContext)
+    {
+        if (!callbackContext.performed) return;
+
+        _dash = true;
+
+
     }
 
     public void Init(GameManager gameManager, Action<PlayerController> onReadyCallback)
@@ -86,7 +99,11 @@ public class PlayerController : MonoBehaviour
 
         HandleMovement();
 
+
+        Dash();
+
         HandleMaxStopTime();
+
     }
 
     private void HandleChair()
@@ -140,7 +157,7 @@ public class PlayerController : MonoBehaviour
             .ToList();
         chairs.Sort((x, y) => x.sqrMagnitude.CompareTo(y.sqrMagnitude));
 
-        foreach(var chair in chairs)
+        foreach (var chair in chairs)
         {
             if (!chair.x.TrySit(this)) break;
 
@@ -194,6 +211,19 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = velocity;
     }
 
+    public void Dash()
+    {
+        if (!_dash) return;
+        Vector3 dashDirection = transform.forward;
+
+        // Apply the dash force
+
+        _sonReact.DoDashAnimation();
+        _dash = false;
+    }
+
+
+
     private void HandleMaxStopTime()
     {
         if (_isStoppedCoroutine == null)
@@ -212,6 +242,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     private void Awake()
     {
@@ -249,6 +280,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        
+
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out PlayerController _))
+        {
+
+        }
+    }
+
+    //IEnumerator FinishDash()
+    //{
+    //    IsDashing = true;
+    //    yield return new WaitForSeconds(1);
+    //}
 }

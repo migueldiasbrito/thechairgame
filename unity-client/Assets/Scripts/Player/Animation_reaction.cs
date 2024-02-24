@@ -33,6 +33,11 @@ public class Animation_reaction : MonoBehaviour
         animator.SetBool("doSit", false);
         this.transform.position = this.transform.position - (0.6f * GetComponentInParent<Transform>().forward);
     }
+    public void DoDashAnimation()
+    {
+        animator.SetTrigger("tackle");
+        this.transform.position = this.transform.position - (0.6f * GetComponentInParent<Transform>().forward);
+    }
 
-   
+
 }
