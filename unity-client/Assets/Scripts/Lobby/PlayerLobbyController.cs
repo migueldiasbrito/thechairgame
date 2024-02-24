@@ -39,6 +39,7 @@ public class PlayerLobbyController : MonoBehaviour
 
         if (_playersReady[playerController]) return;
 
+        _playersReady[playerController] = true;
         int numberOfPlayersReady = _playersReady.Where(x => x.Value).ToList().Count;
 
         if (numberOfPlayersReady == _playersReady.Count)
@@ -49,7 +50,6 @@ public class PlayerLobbyController : MonoBehaviour
         }
         else
         {
-            _playersReady[playerController] = true;
             _noPlayersReadyLabel.SetActive(false);
             _hasPlayersReadyLabel.SetActive(true);
             _playersReadyLabel.text = $"{numberOfPlayersReady} / {_playersReady.Count}";
