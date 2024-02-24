@@ -6,12 +6,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<ChairController> Chairs { get; private set; } = new();
-    [SerializeField] private float _intervalBetweenTurns = 5f;
+    [field: SerializeField] public List<ChairController> Chairs { get; private set; } = new();
+    [SerializeField] private float _intervalBetweenTurns = 2f;
 
     [SerializeField] private Vector2 _playerMinPosition = new Vector2(-1, -1);
-
     [SerializeField] private Vector2 _playerMaxPosition = new Vector2(1, 1);
+
+    [SerializeField] private GameObject _gameOverScreen;
 
     private List<PlayerController> _players = new();
     public GameState State { get; private set; } = GameState.Lobby;
@@ -98,7 +99,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("WINNAH!");
+                _gameOverScreen.SetActive(true);
             }
         }
     }

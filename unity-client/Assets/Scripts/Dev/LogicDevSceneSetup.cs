@@ -33,7 +33,7 @@ public class LogicDevSceneSetup : MonoBehaviour
     void Start()
     {
         //GameManager.StartSetup();
-        GameManager.SetStartTurnAction(turnManager.StartTurn);
+        // GameManager.SetStartTurnAction(turnManager.StartTurn);
     }
 
     // Update is called once per frame

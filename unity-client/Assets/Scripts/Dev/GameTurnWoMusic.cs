@@ -14,7 +14,7 @@ public class GameTurnWoMusic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GameManager.SetStartTurnAction(StartTurn);
     }
 
     // Update is called once per frame

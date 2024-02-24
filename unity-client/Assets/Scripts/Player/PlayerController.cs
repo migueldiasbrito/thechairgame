@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviour
         _gameManager = gameManager;
         _onReadyCallback = onReadyCallback;
 
-        _gameManager.AddChair(GetComponentInChildren<ChairController>());
+        if (TryGetComponent(out ChairController chair))
+            _gameManager.AddChair(chair);
     }
 
     public void Eliminate()
