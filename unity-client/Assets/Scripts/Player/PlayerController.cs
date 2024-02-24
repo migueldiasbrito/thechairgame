@@ -297,6 +297,7 @@ public class PlayerController : MonoBehaviour
         _sonReact.DoDashAnimation();
         IsDashing = true;
         yield return new WaitForSeconds(1);
+        _sonReact.FinishDashAnimation();
         IsDashing = false;
     }
 }
