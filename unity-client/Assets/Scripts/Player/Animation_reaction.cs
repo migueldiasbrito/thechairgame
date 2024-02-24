@@ -16,7 +16,7 @@ public class Animation_reaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("walkSpeed", Mathf.Abs(rigidbody.velocity.x));
+        animator.SetFloat("walkSpeed", Mathf.Abs(rigidbody.velocity.magnitude));
         //if(transform.forward == Vector3)
     }
 
@@ -24,15 +24,15 @@ public class Animation_reaction : MonoBehaviour
     {
        
         animator.SetBool("doSit", true);
-        if (GetComponentInParent<PlayerController>()._chairOccupied != null)
-        {
-            print("found one");
-            //this.transform.position = GetComponentInParent<PlayerController>()._chairOccupied.transform.position;
-        }
+        this.transform.position = this.transform.position + (0.6f * GetComponentInParent<Transform>().forward);
     
+
     }
     public void GetUP()
     {
         animator.SetBool("doSit", false);
+        this.transform.position = this.transform.position - (0.6f * GetComponentInParent<Transform>().forward);
     }
+
+   
 }

@@ -109,10 +109,12 @@ public class PlayerController : MonoBehaviour
         if (_chairOccupied != null)
         {
             _chairOccupied.LeaveChair(this);
+            _sonReact.GetUP();
             _chairOccupied = null;
+         
         }
 
-        _sonReact.GetUP();
+    
     }
 
     private void HandleMovement()
