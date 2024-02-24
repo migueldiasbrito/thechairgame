@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _intervalBetweenTurns = 5f;
 
     [SerializeField] private Vector2 _playerMinPosition = new Vector2(-1, -1);
+
     [SerializeField] private Vector2 _playerMaxPosition = new Vector2(1, 1);
 
     private List<PlayerController> _players = new();
@@ -88,13 +89,17 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerEliminated()
     {
-        if (_players.Count > 1)
+        if (State == GameState.TurnStarted || State == GameState.TurnEnded)
         {
-            StartNewTurn();
-        }
-        else
-        {
-            Debug.Log("WINNAH!");
+
+            if (_players.Count > 1)
+            {
+                StartNewTurn();
+            }
+            else
+            {
+                Debug.Log("WINNAH!");
+            }
         }
     }
 
@@ -126,5 +131,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(_intervalBetweenTurns);
 
         StartTurn();
+    }
+
+    public void PlayerFell(PlayerController player)
+    {
+        if (player.InitialChair != null)
+        {
+            Chairs.Remove(player.InitialChair);
+        }
+
+        EliminatePlayer(player);
     }
 }
