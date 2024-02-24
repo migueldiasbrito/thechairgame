@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [field: SerializeField] public List<ChairController> Chairs { get; private set; }
+    public List<ChairController> Chairs { get; private set; } = new();
     [SerializeField] private float _intervalBetweenTurns = 5f;
 
+    [SerializeField] private Vector2 _playerMinPosition = new Vector2(-1, -1);
+    [SerializeField] private Vector2 _playerMaxPosition = new Vector2(1, 1);
+
     private List<PlayerController> _players = new();
-    private GameState _gameState = GameState.Wait;
+    public GameState State { get; private set; } = GameState.Lobby;
 
     private Action _onStartTurnAction = null;
 
@@ -22,22 +25,47 @@ public class GameManager : MonoBehaviour
     public void AddPlayer(PlayerController player)
     {
         _players.Add(player);
+
+        Vector3 playerPosition = player.transform.position;
+        playerPosition.x = UnityEngine.Random.Range(_playerMinPosition.x, _playerMaxPosition.x);
+        playerPosition.z = UnityEngine.Random.Range(_playerMinPosition.y, _playerMaxPosition.y);
+        player.transform.position = playerPosition;
+
+        //Chairs.Add(player.InitialChair);
     }
 
-    public void StartTurn()
+    public void AddChair(ChairController chair)
     {
-        _gameState = GameState.TurnStarted;
+        Chairs.Add(chair);
+    }
+
+    public void StartSetup()
+    {
+        State = GameState.Setup;
+    }
+
+    public void ChairPlaced()
+    {
+        if (_players.Where(x => x.InitialChair != null).Count() == 0)
+        {
+            StartNewTurn();
+        }
+    }
+
+    private void StartTurn()
+    {
+        State = GameState.TurnStarted;
         _onStartTurnAction.Invoke();
     }
 
     public void EndTurn()
     {
-        _gameState = GameState.TurnEnded;
+        State = GameState.TurnEnded;
     }
 
     public void OnPlayerSit(PlayerController player)
     {
-        switch(_gameState)
+        switch(State)
         {
             case GameState.TurnStarted:
                 EliminatePlayer(player);
@@ -45,7 +73,6 @@ public class GameManager : MonoBehaviour
             case GameState.TurnEnded:
                 PlayerSittedOnTurnEnded();
                 break;
-            case GameState.Wait:
             default:
                 break;
         }

@@ -11,10 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 100;
     [SerializeField] private float _maxDistanceToSitOnChair = 1;
     [SerializeField] private Animation_reaction _sonReact ;
+    [field: SerializeField] public ChairController InitialChair { get; private set; }
 
 
     private Vector2 _movement = Vector2.zero;
-    private bool _sit = false;
+    private bool _action = false;
     private float _sqrMaxDistance;
 
     public bool IsSitted { get; private set; } = false;
@@ -36,11 +37,11 @@ public class PlayerController : MonoBehaviour
         _movement = callbackContext.ReadValue<Vector2>();
     }
 
-    public void OnSit(InputAction.CallbackContext callbackContext)
+    public void OnActionButtonClicked(InputAction.CallbackContext callbackContext)
     {
         if (!callbackContext.performed) return;
 
-        _sit = true;
+        _action = true;
        
     }
 
@@ -48,6 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         _gameManager = gameManager;
         _onReadyCallback = onReadyCallback;
+
+        _gameManager.AddChair(GetComponentInChildren<ChairController>());
     }
 
     public void Eliminate()
@@ -64,14 +67,38 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HandleChair();
+
         HandleSitting();
 
         HandleMovement();
     }
 
+    private void HandleChair()
+    {
+        if (!_action || InitialChair == null || _gameManager.State != GameState.Setup) return;
+
+        Vector3 chairPosition = InitialChair.transform.localPosition;
+        chairPosition.y = 0;
+        InitialChair.transform.localPosition = chairPosition;
+
+        InitialChair.transform.parent = null;
+        InitialChair = null;
+
+        _gameManager.ChairPlaced();
+
+        _action = false;
+    }
+
     private void HandleSitting()
     {
-        if (!_sit) return;
+        if (!_action) return;
+
+        if (InitialChair != null)
+        {
+            _action = false;
+            return;
+        }
 
         if (IsSitted)
         {
@@ -82,7 +109,7 @@ public class PlayerController : MonoBehaviour
             TrySitOnChair();
         }
 
-        _sit = false;
+        _action = false;
     }
 
     private void TrySitOnChair()
@@ -155,6 +182,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _sqrMaxDistance = Mathf.Pow(_maxDistanceToSitOnChair, 2);
+    }
+
+    private void Start()
+    {
+        InitialChair = GetComponentInChildren<ChairController>();
     }
 
     private void OnDestroy()

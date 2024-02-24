@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sit",
+                    "name": "Action",
                     "type": "Button",
                     "id": "972c0529-1f27-4905-88eb-819c5d2e198f",
                     "expectedControlType": "Button",
@@ -107,7 +107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sit",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -118,7 +118,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sit",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -45,6 +45,7 @@ public class PlayerLobbyController : MonoBehaviour
         {
             _lobbyPanel.SetActive(false);
             _playerInputManager.DisableJoining();
+            _gameManager.StartSetup();
         }
         else
         {
