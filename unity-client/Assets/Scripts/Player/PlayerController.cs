@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animation_reaction[] _bonecoPrefab;
     [SerializeField] private ChairController[] _cadeirasPrefabs;
 
+    [SerializeField] private float _desintegrationSpeed = 1;
 
     private Vector2 _movement = Vector2.zero;
     private bool _action = false;
@@ -91,6 +92,27 @@ public class PlayerController : MonoBehaviour
 
         _canMove = false;
         _rigidbody.isKinematic = true;
+
+        StartCoroutine(Desintegramos());
+    }
+
+    private IEnumerator Desintegramos()
+    {
+        float value = 0;
+
+        do
+        {
+            yield return null;
+
+            value += _desintegrationSpeed * Time.deltaTime;
+            foreach(Renderer renderer in _sonReact.Renderers)
+            {
+                renderer.material.SetFloat("_dissolveamount", value);
+            }
+
+        } while (value <= 1);
+
+        Destroy(gameObject);
     }
 
     public void Win()
