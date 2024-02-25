@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Animation_reaction : MonoBehaviour
 {
+    [field: SerializeField] public Renderer[] Renderers{ get; private set; }
+
     private Animator animator;
     private Rigidbody rigidbody;
     // Start is called before the first frame update
