@@ -44,6 +44,14 @@ public class Animation_reaction : MonoBehaviour
         //this.transform.position = this.transform.position - (0.6f * GetComponentInParent<Transform>().forward);
     }
 
+    public void Win()
+    {
+        animator.SetBool("win", true);
+    }
 
+    public void Lose()
+    {
+        animator.SetBool("losing", true);
+    }
 
 }
