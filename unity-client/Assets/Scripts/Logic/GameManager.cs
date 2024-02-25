@@ -103,6 +103,10 @@ public class GameManager : MonoBehaviour
                 _gameOverScreen.SetActive(true);
             }
         }
+        else if (State == GameState.Setup)
+        {
+            ChairPlaced();
+        }
     }
 
     private void PlayerSittedOnTurnEnded()

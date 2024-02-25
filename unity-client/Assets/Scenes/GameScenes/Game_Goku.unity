@@ -832,7 +832,7 @@ PrefabInstance:
     - target: {fileID: 391116386570035894, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
       propertyPath: _music
       value: 
-      objectReference: {fileID: 8300000, guid: 95ea133c4854d5240ae39634defe6685, type: 3}
+      objectReference: {fileID: 8300000, guid: 3db2870805c218e47ae491561ccdbbbb, type: 3}
     - target: {fileID: 2754063480532191317, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
