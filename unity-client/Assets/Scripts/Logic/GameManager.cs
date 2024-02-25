@@ -121,8 +121,7 @@ public class GameManager : MonoBehaviour
 
         int chairToDestroyIndex = UnityEngine.Random.Range(0, Chairs.Count);
 
-        // Animate me instead...
-        Destroy(Chairs[chairToDestroyIndex].gameObject);
+        Chairs[chairToDestroyIndex].DestroyChair();
         Chairs.RemoveAt(chairToDestroyIndex);
 
         StartCoroutine(ScheduleNextTurn());
@@ -139,6 +138,7 @@ public class GameManager : MonoBehaviour
     {
         if (player.InitialChair != null)
         {
+            player.InitialChair.DestroyChair();
             Chairs.Remove(player.InitialChair);
         }
 
