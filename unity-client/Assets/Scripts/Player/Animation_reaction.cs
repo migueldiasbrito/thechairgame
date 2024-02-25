@@ -22,18 +22,22 @@ public class Animation_reaction : MonoBehaviour
         //if(transform.forward == Vector3)
     }
 
-    public void Sit()
+    public void Sit(bool hasChair)
     {
        
         animator.SetBool("doSit", true);
-        this.transform.position = this.transform.position + (0.6f * GetComponentInParent<Transform>().forward);
+
+        if (hasChair)
+            transform.position = transform.position + (0.6f * GetComponentInParent<Transform>().forward);
     
 
     }
-    public void GetUP()
+    public void GetUP(bool hasChair)
     {
         animator.SetBool("doSit", false);
-        this.transform.position = this.transform.position - (0.6f * GetComponentInParent<Transform>().forward);
+        
+        if (hasChair)
+            transform.position = transform.position - (0.6f * GetComponentInParent<Transform>().forward);
     }
     public void DoDashAnimation()
     {

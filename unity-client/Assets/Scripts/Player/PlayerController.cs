@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
             if (!chair.x.TrySit(this)) break;
 
             ChairOccupied = chair.x;
-            _sonReact.Sit();
+
             Vector3 position = transform.position;
             position.x = chair.x.transform.position.x;
             position.z = chair.x.transform.position.z;
@@ -216,6 +216,8 @@ public class PlayerController : MonoBehaviour
 
             break;
         }
+
+        _sonReact.Sit(ChairOccupied != null);
     }
 
     public void GetUp()
@@ -225,10 +227,11 @@ public class PlayerController : MonoBehaviour
         _rigidbody.isKinematic = false;
         _collider.enabled = true;
 
+        _sonReact.GetUP(ChairOccupied != null);
+
         if (ChairOccupied != null)
         {
             ChairOccupied.LeaveChair(this);
-            _sonReact.GetUP();
             ChairOccupied = null;
         }
     }
