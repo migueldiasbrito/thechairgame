@@ -146,7 +146,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 54409596923227288}
   _collider: {fileID: 3399072345741357221}
   _speed: 200
-  _dashForce: 25
+  _dashForce: 3.5
   _rotationSpeed: 100
   _maxDistanceToSitOnChair: 2
   _sonReact: {fileID: 7366368105020392876}

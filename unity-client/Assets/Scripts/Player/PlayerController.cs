@@ -61,8 +61,6 @@ public class PlayerController : MonoBehaviour
         if (!callbackContext.performed) return;
 
         _dash = true;
-
-
     }
 
     public void Init(GameManager gameManager, Action<PlayerController> onReadyCallback)
@@ -95,10 +93,9 @@ public class PlayerController : MonoBehaviour
 
         HandleSitting();
 
-        HandleMovement();
-
-
         Dash();
+
+        HandleMovement();
 
         HandleMaxStopTime();
 
@@ -189,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (IsSitted) return;
+        if (IsSitted || IsDashing) return;
 
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = _movement.x * _speed * Time.fixedDeltaTime;
@@ -211,15 +208,13 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (!_dash) return;
-
-        // Apply the dash force
-        StartCoroutine(GoDash());
+        if (_dash && !IsSitted && !IsDashing && InitialChair == null)
+        {
+            StartCoroutine(GoDash());
+        }
 
         _dash = false;
     }
-
-
 
     private void HandleMaxStopTime()
     {
@@ -303,10 +298,16 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator GoDash()
     {
+        Vector3 velocity = transform.forward * _dashForce;
+        velocity.y = _rigidbody.velocity.y;
+        _rigidbody.velocity = velocity;
+
+        _rigidbody.velocity += transform.forward * _dashForce;
         _sonReact.DoDashAnimation();
-        _rigidbody.velocity += transform.forward* _dashForce;
-      IsDashing = true;
+        IsDashing = true;
+
         yield return new WaitForSeconds(1);
+
         _sonReact.FinishDashAnimation();
         IsDashing = false;
     }
