@@ -10,6 +10,8 @@ public class AudioLoopManager : MonoBehaviour
     [SerializeField] private AudioClip _music;
     [SerializeField] private float _minDuration = 2f;
 
+    private Coroutine _coroutine;
+
     private void Start()
     {
         _gameManager.SetStartTurnAction(StartTurn);
@@ -17,9 +19,15 @@ public class AudioLoopManager : MonoBehaviour
 
     private void StartTurn()
     {
+        if (_coroutine != null)
+        {
+            _audioSource.Stop();
+            StopCoroutine(_coroutine);
+        }
+
         float duration = Random.Range(_minDuration, _music.length);
 
-        StartCoroutine(PlaySongFor(duration));
+        _coroutine = StartCoroutine(PlaySongFor(duration));
     }
 
     private IEnumerator PlaySongFor(float duration)

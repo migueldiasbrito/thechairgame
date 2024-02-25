@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerFell(PlayerController player)
     {
+        if (!_players.Contains(player)) return;
+
         if (player.InitialChair != null)
         {
             player.InitialChair.DestroyChair();
