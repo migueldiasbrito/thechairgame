@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxStopTime = 1f;
     [SerializeField] private float _stopedTimeAfterBurst = 1f;
 
+    [SerializeField] private Animation_reaction[] _bonecoPrefab;
+    [SerializeField] private ChairController[] _cadeirasPrefabs;
+
 
     private Vector2 _movement = Vector2.zero;
     private bool _action = false;
@@ -245,10 +248,19 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        InitialChair = GetComponentInChildren<ChairController>();
+        int _sonPrefabIndex = UnityEngine.Random.Range(0, _bonecoPrefab.Length);
+        _sonReact = Instantiate(_bonecoPrefab[_sonPrefabIndex], transform);
+        // :)
+        //_sonReact.transform.localPosition += new Vector3(0, -1.14f, 0);
 
-        if (InitialChair != null)
+        if (_cadeirasPrefabs.Length > 0)
+        {
+            int _chairPrefabIndex = UnityEngine.Random.Range(0, _cadeirasPrefabs.Length);
+            InitialChair = Instantiate(_cadeirasPrefabs[_chairPrefabIndex], transform);
+            // :)
+            // _sonReact.transform.localPosition += new Vector3(0, 0.5f, 1.5f);
             _gameManager.AddChair(InitialChair);
+        }
     }
 
     private IEnumerator MexeTe()
