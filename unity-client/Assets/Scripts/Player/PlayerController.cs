@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float _desintegrationSpeed = 1;
 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _dashSound;
+    [SerializeField] private AudioClip _hittedSound;
+    [SerializeField] private AudioClip _burstedSound;
+
     private Vector2 _movement = Vector2.zero;
     private bool _action = false;
     private bool _dash = false;
@@ -315,6 +320,8 @@ public class PlayerController : MonoBehaviour
         }
         while (delta <= _maxStopTime);
 
+        _audioSource.PlayOneShot(_burstedSound);
+
         Vector3 velocity = _rigidbody.velocity;
         velocity.y = _fogoNoCuForce.y;
 
@@ -372,6 +379,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GoDash()
     {
+        _audioSource.PlayOneShot(_dashSound);
+
         Vector3 velocity = transform.forward * _dashForce;
         velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
@@ -393,6 +402,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator GetPushedRoutine(Vector3 direction)
     {
+        _audioSource.PlayOneShot(_hittedSound);
+
         Vector3 velocity = direction * _dashForce;
 
         if (IsDashing)
