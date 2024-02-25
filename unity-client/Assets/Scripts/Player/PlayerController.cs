@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
 
             value += _desintegrationSpeed * Time.deltaTime;
-            foreach(Renderer renderer in _sonReact.Renderers)
+            foreach (Renderer renderer in _sonReact.Renderers)
             {
                 renderer.material.SetFloat("_dissolveamount", value);
             }
@@ -274,6 +274,7 @@ public class PlayerController : MonoBehaviour
             if (_gameManager.State != GameState.TurnStarted || _movement.magnitude >= 0.1f)
             {
                 StopCoroutine(_isStoppedCoroutine);
+                SetMaterialAlpha(0);
                 _isStoppedCoroutine = null;
             }
         }
@@ -304,7 +305,15 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator MexeTe()
     {
-        yield return new WaitForSeconds(_maxStopTime);
+        float delta = 0;
+        do
+        {
+            yield return null;
+
+            delta += Time.deltaTime;
+            SetMaterialAlpha(delta / _maxStopTime);
+        }
+        while (delta <= _maxStopTime);
 
         Vector3 velocity = _rigidbody.velocity;
         velocity.y = _fogoNoCuForce.y;
@@ -316,7 +325,22 @@ public class PlayerController : MonoBehaviour
 
         _rigidbody.velocity = velocity;
 
+        SetMaterialAlpha(0);
+
         StartCoroutine(NaoTeMexesAgora());
+    }
+
+    private void SetMaterialAlpha(float alpha)
+    {
+        foreach (Renderer renderer in _sonReact.Renderers)
+        {
+            if (renderer.materials.Length >= 2)
+            {
+                Color color = renderer.materials[1].GetColor("_TintColor");
+                color.a = alpha;
+                renderer.materials[1].SetColor("_TintColor", color);
+            }
+        }
     }
 
     private IEnumerator NaoTeMexesAgora()
