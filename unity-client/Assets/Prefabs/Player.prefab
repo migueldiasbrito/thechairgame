@@ -154,7 +154,7 @@ MonoBehaviour:
   _maxStopTime: 1
   _stopedTimeAfterBurst: 1
   _bonecoPrefab:
-  - {fileID: 5711167454910574670, guid: bb72d5770e1b0fe489499b508b349cf5, type: 3}
+  - {fileID: 8286891910389842693, guid: 744e2bbc05dbb684981b0a9cbd167161, type: 3}
   - {fileID: 5924806447315808447, guid: 7d07a1044f1039c40b404b71665e896d, type: 3}
   _cadeirasPrefabs:
   - {fileID: 6743399419992943991, guid: c77a1f8d2ad93b94fa973d4fcf09ab05, type: 3}
