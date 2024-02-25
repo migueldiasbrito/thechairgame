@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsSitted { get; private set; } = false;
     public bool IsDashing { get; private set; } = false;
+    private bool IsPushed = false;
 
     public ChairController ChairOccupied { get; private set; } = null;
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private Action<PlayerController> _onReadyCallback;
 
     private Coroutine _isStoppedCoroutine = null;
+    private Coroutine _dashCoroutine = null;
 
     public void OnPlayerReady(InputAction.CallbackContext callbackContext)
     {
@@ -186,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (IsSitted || IsDashing) return;
+        if (IsSitted || IsDashing || IsPushed) return;
 
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = _movement.x * _speed * Time.fixedDeltaTime;
@@ -208,9 +210,9 @@ public class PlayerController : MonoBehaviour
 
     public void Dash()
     {
-        if (_dash && !IsSitted && !IsDashing && InitialChair == null)
+        if (_dash && !IsSitted && !IsDashing && !IsPushed && InitialChair == null)
         {
-            StartCoroutine(GoDash());
+            _dashCoroutine = StartCoroutine(GoDash());
         }
 
         _dash = false;
@@ -280,29 +282,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerController _))
+        if (collision.gameObject.TryGetComponent(out PlayerController other))
         {
             if (IsDashing)
-
             {
-              
-                collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * _dashForce * 10);
+                other.GetPushed(transform.forward);
+
+                if (_dashCoroutine != null) StopCoroutine(_dashCoroutine);
                 _sonReact.FinishDashAnimation();
                 IsDashing = false;
             }
-                
-               
-
         }
     }
 
-    IEnumerator GoDash()
+    private IEnumerator GoDash()
     {
         Vector3 velocity = transform.forward * _dashForce;
         velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
 
-        _rigidbody.velocity += transform.forward * _dashForce;
         _sonReact.DoDashAnimation();
         IsDashing = true;
 
@@ -310,5 +308,34 @@ public class PlayerController : MonoBehaviour
 
         _sonReact.FinishDashAnimation();
         IsDashing = false;
+    }
+
+    public void GetPushed(Vector3 direction)
+    {
+        if (_dashCoroutine != null) StopCoroutine(_dashCoroutine);
+        _dashCoroutine = StartCoroutine(GetPushedRoutine(direction));
+    }
+
+    private IEnumerator GetPushedRoutine(Vector3 direction)
+    {
+        Vector3 velocity = direction * _dashForce;
+
+        if (IsDashing)
+        {
+            _rigidbody.velocity += velocity;
+            IsDashing = false;
+        }
+        else
+        {
+            velocity.y = _rigidbody.velocity.y;
+            _rigidbody.velocity = velocity;
+
+            _sonReact.DoDashAnimation();
+        }
+
+        IsPushed = true;
+        yield return new WaitForSeconds(1);
+        _sonReact.FinishDashAnimation();
+        IsPushed = false;
     }
 }
