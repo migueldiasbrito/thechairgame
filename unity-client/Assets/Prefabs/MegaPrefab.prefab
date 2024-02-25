@@ -83,9 +83,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 1797139513154539723}
   _audioSource: {fileID: 5086367317725834695}
-  _audioClips:
-  - {fileID: 8300000, guid: f89ceaabf6eb3674d8e103aaef8e26af, type: 3}
-  _maxClipsPerTurns: 5
+  _music: {fileID: 8300000, guid: c14ef42ad348e0c43b57b6a92b49493f, type: 3}
+  _minDuration: 2
 --- !u!82 &5086367317725834695
 AudioSource:
   m_ObjectHideFlags: 0

@@ -7,10 +7,8 @@ public class AudioLoopManager : MonoBehaviour
     [SerializeField] private GameManager _gameManager;
 
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip[] _audioClips;
-    [SerializeField] private int _maxClipsPerTurns;
-
-    private Queue<AudioClip> _currentTurnAudioClips = new();
+    [SerializeField] private AudioClip _music;
+    [SerializeField] private float _minDuration = 2f;
 
     private void Start()
     {
@@ -19,27 +17,17 @@ public class AudioLoopManager : MonoBehaviour
 
     private void StartTurn()
     {
-        _currentTurnAudioClips.Clear();
+        float duration = Random.Range(_minDuration, _music.length);
 
-        int numberOfClips = Random.Range(1, _maxClipsPerTurns + 1);
-
-        for (int i = 0; i < numberOfClips; i++)
-        {
-            _currentTurnAudioClips.Enqueue(_audioClips[Random.Range(0, _audioClips.Length)]);
-        }
-
-        StartCoroutine(PlayNextSound());
+        StartCoroutine(PlaySongFor(duration));
     }
 
-    private IEnumerator PlayNextSound()
+    private IEnumerator PlaySongFor(float duration)
     {
-        while (_currentTurnAudioClips.Count > 0)
-        {
-            AudioClip clip = _currentTurnAudioClips.Dequeue();
-            _audioSource.PlayOneShot(clip);
-            yield return new WaitForSeconds(clip.length);
-        }
-        
+        _audioSource.PlayOneShot(_music);
+        yield return new WaitForSeconds(duration);
+
+        _audioSource.Stop();
         _gameManager.EndTurn();
     }
 }
