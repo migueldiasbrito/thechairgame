@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 6605581003054573004}
   m_Layer: 0
   m_Name: polySurface5
-  m_TagString: Untagged
+  m_TagString: shirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -1833,7 +1833,7 @@ GameObject:
   - component: {fileID: 3842496032057008576}
   m_Layer: 0
   m_Name: shirt_GEO
-  m_TagString: Untagged
+  m_TagString: shirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

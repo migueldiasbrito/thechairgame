@@ -298,6 +298,27 @@ public class PlayerController : MonoBehaviour
     {
         int _sonPrefabIndex = UnityEngine.Random.Range(0, _bonecoPrefab.Length);
         _sonReact = Instantiate(_bonecoPrefab[_sonPrefabIndex], transform);
+
+        foreach (Transform child in _sonReact.transform)
+        {
+            // Generate a random color with alpha included
+            Color randomColor = UnityEngine.Random.ColorHSV(0f, 1f, 0f, 1f, 0f, 1f, 1f, 1f);
+
+            // Set the alpha value to 1
+            randomColor.a = 1f;
+            if (child.tag == "shirt")
+            {
+    
+                child.GetComponent<Renderer>().material.SetColor("_Color", randomColor);
+            }
+            foreach (Transform child2 in child.transform)
+            {
+                if (child2.tag == "shirt")
+                {
+                    child2.GetComponent<Renderer>().material.SetColor("_Color", randomColor);
+                }
+            }
+        }
         // :)
         //_sonReact.transform.localPosition += new Vector3(0, -1.14f, 0);
 
