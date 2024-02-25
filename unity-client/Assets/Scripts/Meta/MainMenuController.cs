@@ -3,12 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private int _gameSceneIndex = 1;
-    [SerializeField] private int _creditsSceneIndex = 2;
+    [SerializeField] private int[] _gameScenesIndexes = { 2, 3, 4 };
+    [SerializeField] private int _creditsSceneIndex = 1;
 
     public void GoToGame()
     {
-        SceneManager.LoadScene(_gameSceneIndex);
+        int index = Random.Range(0, _gameScenesIndexes.Length);
+        SceneManager.LoadScene(_gameScenesIndexes[index]);
     }
 
     public void GoToCredits()

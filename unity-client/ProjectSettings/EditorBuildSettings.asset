@@ -9,10 +9,16 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 92a5da581b5cea9409b39ab0ea40d9de
-  - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: d09468296a6f8f94186ad2bee501112b
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Game_Goku.unity
+    guid: 6ec52f7ed872ece46a3410095c296bdd
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Game_Iron.unity
+    guid: 02da723be80565c45af76e56bda4ae70
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/Music.unity
+    guid: 7c4f69797910cbb40b87ba2202fe82eb
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e1766ac20ffcbe544900b9b8dc15b4c0, type: 2}
