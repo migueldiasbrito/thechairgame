@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                _players[0].Win();
                 _gameOverScreen.SetActive(true);
             }
         }

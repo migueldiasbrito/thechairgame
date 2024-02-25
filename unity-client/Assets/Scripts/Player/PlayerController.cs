@@ -83,7 +83,24 @@ public class PlayerController : MonoBehaviour
         }
 
         // Animate me instead...
-        Destroy(gameObject);
+        //Destroy(gameObject);
+
+        _sonReact.Lose();
+
+        StopAllCoroutines();
+
+        _canMove = false;
+        _rigidbody.isKinematic = true;
+    }
+
+    public void Win()
+    {
+        _sonReact.Win();
+
+        StopAllCoroutines();
+
+        _canMove = false;
+        _rigidbody.isKinematic = true;
     }
 
     private void FixedUpdate()
