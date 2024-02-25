@@ -9,6 +9,8 @@ public class MainMenuController : MonoBehaviour
 
     public void GoToGame()
     {
+        Destroy(MainMenuMusic.Instance.gameObject);
+
         int index = Random.Range(0, _gameScenesIndexes.Length);
         SceneManager.LoadScene(_gameScenesIndexes[index]);
     }
