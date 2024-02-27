@@ -33,6 +33,22 @@ public class PlayerLobbyController : MonoBehaviour
         }
     }
 
+    public void OnPlayerLeave(PlayerInput playerInput)
+    {
+        if (playerInput.TryGetComponent(out PlayerController playerController))
+        {
+            _playersReady.Remove(playerController);
+            
+            if (_playersReady.Count < 2)
+            {
+                _startInstruction.SetActive(false);
+                _noPlayersReadyLabel.SetActive(false);
+                _hasPlayersReadyLabel.SetActive(false);
+                _playersReadyLabel.gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void OnPlayerReady(PlayerController playerController)
     {
         if (_playersReady.Count < 2) return;
