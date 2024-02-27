@@ -2943,6 +2943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 391116386570035894, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
+      propertyPath: _music
+      value: 
+      objectReference: {fileID: 8300000, guid: 166ce1cb5cdf82d428bfc5e3ee744b0a, type: 3}
     - target: {fileID: 2754063480532191317, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2986,7 +2990,7 @@ PrefabInstance:
     - target: {fileID: 5086367317725834695, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 166ce1cb5cdf82d428bfc5e3ee744b0a, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5459692907297069395, guid: efdf561f2d23ac142b4639867f185d37, type: 3}
       propertyPath: m_Name
       value: MegaPrefab
