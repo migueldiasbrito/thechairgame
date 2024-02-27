@@ -45,6 +45,12 @@ public class PlayerLobbyController : MonoBehaviour
                 _noPlayersReadyLabel.SetActive(false);
                 _hasPlayersReadyLabel.SetActive(false);
                 _playersReadyLabel.gameObject.SetActive(false);
+
+                List<PlayerController> players = new List<PlayerController>(_playersReady.Keys);
+                foreach (PlayerController player in players)
+                {
+                    _playersReady[player] = false;
+                }
             }
         }
     }
